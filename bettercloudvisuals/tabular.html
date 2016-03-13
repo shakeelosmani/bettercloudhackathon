@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Tabular Data</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <style>
+		#loader{
+			width:100%;
+		}
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Incidence Tabular Data</h2>          
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+		<th>Issue No</th>
+        <th>Employee Name</th>
+        <th>Company Name</th>
+        <th>Event Time</th>
+      </tr>
+    </thead>
+    <tbody id="dynamicdata">
+		<img id="loader" src="loader.gif"/>
+    </tbody>
+  </table>
+</div>
+<script>
+$(document).ready(function(){
+	 $.ajax({
+       url:'http://localhost/bettercloud/getsuspiciouseventemployee',
+       type:'GET',
+       success: function(data)
+       {
+           var output = [];
+		   count = 1;
+           $.each(data, function(index,value){
+				
+				output.push("<tr><td>"+count+"</td><td>"+value["employee_name"]+"</td><td>"+value["company_name"]+"</td><td>"+value["event_time"]+"</td></tr>");
+                count+=1;
+           });
+		   $("#loader").hide("slow");
+           $('#dynamicdata').html(output.join(""));
+       }
+        
+   });
+});
+</script>
+</body>
+</html>

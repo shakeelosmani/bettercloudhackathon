@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>Marker Cluster</title>
+  <style >
+      body {
+        margin: 0;
+        padding: 10px 20px 20px;
+        font-family: Arial;
+        font-size: 16px;
+      }
+      #map-container {
+        padding: 6px;
+        border-width: 1px;
+        border-style: solid;
+        border-color: #ccc #ccc #999 #ccc;
+        -webkit-box-shadow: rgba(64, 64, 64, 0.5) 0 2px 5px;
+        -moz-box-shadow: rgba(64, 64, 64, 0.5) 0 2px 5px;
+        box-shadow: rgba(64, 64, 64, 0.1) 0 2px 5px;
+        width: 1000px;
+		margin:0 auto;
+      }
+      #map {
+        width: 980px;
+        height: 580px;
+		
+      }
+    </style>
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+</head>
+<body>
+	
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgAwanxpmcihS9xPLWQWHRatIfaEk-b98"></script>
+	<script src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer_compiled.js"></script>
+	
+	<script>
+		var lat = []; // global variables so can be used in the map function
+		var lng = [];
+	
+		$(document).ready(function(){
+		var myjson;
+		
+		$.getJSON("http://localhost/bettercloud/getsuspiciouseventslocation", function(json){ // query to fetch the latitude and longitude as jsonp
+			
+			$.each(json, function(index , value) {
+				lat.push(value["Latitude"]); // the first index is lat 
+				lng.push(value["Longitude"]); // 2nd index is long
+			});
+			initialize();
+		});
+		function initialize() {
+        var center = new google.maps.LatLng(28.754711, -95.388068);
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 4,
+          center: center,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+
+        var markers = [];
+        for (var i = 0; i < 103; i++) {
+          var latLng = new google.maps.LatLng(lat[i],lng[i]);
+          var marker = new google.maps.Marker({
+            position: latLng
+          });
+          markers.push(marker);
+        }
+			var markerCluster = new MarkerClusterer(map, markers); 
+		}
+		
+		
+		
+	
+			
+		});
+		
+		
+		
+      
+    </script>
+
+	<h3 style="text-align:center; font-family:verdana; margin-top:5px;">Cluster Markers for the Incidence with drill down</h3>
+	<div id="map-container"><div id="map"></div></div>
+</body>
+</html>

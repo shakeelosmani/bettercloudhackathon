@@ -1,0 +1,64 @@
+<html>
+  <head>
+	<title>Month wise comparison between two comapnies</title>
+	<script type='text/javascript' src='https://s3.amazonaws.com/dynatable-docs-assets/js/jquery-1.9.1.min.js'></script>
+	<script type='text/javascript' src='http://microbuilder.io/assets/js/Chart.min.js'></script>
+	<style>
+		#myChart{
+			left: 10%;
+			margin: 0 auto;
+			position: relative;
+			text-align: center;
+			top: 70px;
+		}
+	</style>
+    <script type="text/javascript">
+	
+  
+
+    $(document).ready(function(){
+
+		var data = {
+    labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+    datasets: [
+      {
+        label: "My First dataset",
+        fillColor: "rgba(220,220,220,0.2)",
+        strokeColor: "rgba(220,220,220,1)",
+        pointColor: "rgba(220,220,220,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(220,220,220,1)",
+        data: [0, 0, 11, 13, 0, 0, 0,0,0,0,0,0]
+      },
+      {
+        label: "My Second dataset",
+        fillColor: "rgba(151,187,205,0.2)",
+        strokeColor: "rgba(151,187,205,1)",
+        pointColor: "rgba(151,187,205,1)",
+        pointStrokeColor: "#fff",
+        pointHighlightFill: "#fff",
+        pointHighlightStroke: "rgba(151,187,205,1)",
+        data: [0,0,16,18,0,0,0,0,0,0,0,0]
+      }
+    ]
+  };
+  
+  var ctx = document.getElementById("myChart").getContext("2d");
+
+  var myChart = new Chart(ctx).Line(data);
+
+   
+});
+
+     
+
+    </script>
+  </head>
+
+  <body>
+    <!--Div that will hold the pie chart-->
+	<h3 style="text-align:center; font-family:verdana; margin-top:5px;">Comparison of number of employees involved in suspicious activities BetterCloud (Off White) vs LinkedIn (Light Blue)</h3>
+    <canvas id="myChart" width="940" height="400"></canvas>
+  </body>
+</html>
